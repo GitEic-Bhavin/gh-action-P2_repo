@@ -34,6 +34,7 @@ jobs:
       
       - name: Publish dist dir contents.
         run: find dist/assets/*.js -type f -execdir echo '{}' ';'
+        working-directory: 01StartingProject
 
       - name: Upload Artifacts in multiple paths/folders.
         uses: actions/upload-artifact@v4
