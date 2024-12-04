@@ -37,7 +37,7 @@ jobs:
         working-directory: 01StartingProject
       
       - name: Publish dist dir contents.
-        run: find dist/assets/ -name '*.js' -type f -exec echo 'script-file{}' >> $GITHUB_OUTPUT \;
+        run: find dist/assets/*.js -type f -execdir echo 'script-file{}' >> $GITHUB_OUTPUT ';'
         id: output_of_file
         working-directory: 01StartingProject
 
