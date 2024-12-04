@@ -52,7 +52,7 @@ jobs:
         working-directory: 01StartingProject
 
       - name: Upload Artifacts in multiple paths/folders.
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4 
         with:
           name: my-artifact-name  # your artifact name
           path: | # define multiple path/folder where your artifacts will be stored/upload.
