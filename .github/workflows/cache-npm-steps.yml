@@ -1,0 +1,65 @@
+# If you have 4 jobs , all 4 jobs having same installation steps of npm , test, build steps.
+# Instead of Insatlling npm in all 4 jobs , just use caches of 1st jobs into all other jobs.
+# Dont need to download/install from fresh.
+# Just use copy of cache.
+
+
+name: Cacheing All Npm Steps and use into other job.
+on:
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      
+      - name: Cache all npm steps.
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: retrive-cache-key-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+        working-directory: 01StartingProject
+      - name: Lint code
+        run: npm run lint
+        working-directory: 01StartingProject
+      - name: Test code
+        run: npm run test
+        working-directory: 01StartingProject
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+
+      - name: Cache all npm steps.
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: retrive-cache-key-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm install
+        working-directory: 01StartingProject
+      - name: Build website
+        run: npm run build
+        working-directory: 01StartingProject
+
+      - name: Upload Artifacts in multiple paths/folders.
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact-name  # your artifact name
+          path: | # define multiple path/folder where your artifacts will be stored/upload.
+            dist
+            01StartingProject
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "Deploying..."
