@@ -31,6 +31,9 @@ jobs:
       - name: Build website
         run: npm run build
         working-directory: 01StartingProject
+      
+      - name: Publish dist dir contents.
+        run: find dist/assets/*.js -type f -execdir echo '{}' ';'
 
       - name: Upload Artifacts in multiple paths/folders.
         uses: actions/upload-artifact@v4
