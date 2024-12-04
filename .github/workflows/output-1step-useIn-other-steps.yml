@@ -1,0 +1,63 @@
+name: Create Artifacts and use in other jobs.
+on:
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm ci
+        working-directory: 01StartingProject
+      - name: Lint code
+        run: npm run lint
+        working-directory: 01StartingProject
+      - name: Test code
+        run: npm run test
+        working-directory: 01StartingProject
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    outputs:
+      script-file: ${{ steps.output_of_file.outputs.script-file }}\
+      # ${{ steps.steps_id_name.outputs.output_name_in_that_steps.}}
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+        working-directory: 01StartingProject
+      - name: Build website
+        run: npm run build
+        working-directory: 01StartingProject
+      
+      - name: Publish dist dir contents.
+        run: find dist/assets/*.js -type f -execdir echo 'script-file{}' >> $GITHUB_OUTPUT ';'
+        id: output_of_file
+        working-directory: 01StartingProject
+
+      - name: Upload Artifacts in multiple paths/folders.
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact-name  # your artifact name
+          path: | # define multiple path/folder where your artifacts will be stored/upload.
+            dist
+            01StartingProject
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Artifacts from previous build / Jobs.
+        uses: actions/download-artifact@v4  # Download and upzip your artifacts.
+        with:
+          name: my-artifact-name
+      - name: Output filename
+        run: echo "${{ needs.build.outputs.script-file}}"
+      - name: Confirm Artifacts Downloaded
+        run: ls -ltr
+        # working-directory: 01StartingProject
