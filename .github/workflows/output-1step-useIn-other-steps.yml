@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      script-file: ${{ steps.output_of_file.outputs.script-file }}\
+      script-file: ${{ steps.output_of_file.outputs.script-file }}
       # ${{ steps.steps_id_name.outputs.output_name_in_that_steps.}}
     steps:
       - name: Get code
