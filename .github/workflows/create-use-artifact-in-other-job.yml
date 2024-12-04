@@ -48,5 +48,5 @@ jobs:
         with:
           name: my-artifact-name
       - name: Confirm Artifacts Downloaded
-        run: ls
+        run: ls -ltr
         # working-directory: 01StartingProject
