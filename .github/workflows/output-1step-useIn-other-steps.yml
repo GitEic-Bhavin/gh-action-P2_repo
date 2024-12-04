@@ -1,4 +1,4 @@
-name: Create Artifacts and use in other jobs.
+name: Create Output and use in other jobs.
 on:
   push:
     branches:
