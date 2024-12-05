@@ -70,7 +70,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist-files
-          path: dist
+          path: Run-Job-step-Conditioanlly/dist
         # working-directory: Run-Job-step-Conditioanlly
   deploy:
     needs: build
