@@ -1,0 +1,86 @@
+name: Control over Jobs Steps.
+on:
+  push:
+    branches:
+      - master
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        working-directory: Run-Job-step-Conditioanlly
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+        working-directory: Run-Job-step-Conditioanlly
+      - name: Lint code
+        run: npm run lint
+        working-directory: Run-Job-step-Conditioanlly
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        working-directory: Run-Job-step-Conditioanlly
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+        working-directory: Run-Job-step-Conditioanlly
+      - name: Test code
+        run: npm run test
+        working-directory: Run-Job-step-Conditioanlly
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        working-directory: Run-Job-step-Conditioanlly
+        with:
+          name: test-report
+          path: test.json
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        working-directory: Run-Job-step-Conditioanlly
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+        working-directory: Run-Job-step-Conditioanlly
+      - name: Build website
+        id: build-website
+        run: npm run build
+        working-directory: Run-Job-step-Conditioanlly
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: dist
+        working-directory: Run-Job-step-Conditioanlly
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+      - name: Output contents
+        run: ls
+      - name: Deploy
+        run: echo "Deploying..."

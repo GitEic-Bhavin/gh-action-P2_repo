@@ -1,0 +1,19 @@
+Our Workflows
+
+1. Checkout
+2. Test
+3. Build
+4. Use Build Artifact in this Stage
+
+If anyone of stage fails and get error, it will not moving furhter and dont run next stage steps.
+
+This is Default Behaviours of Github Actions.
+
+Sometime you want to ignore that error / fails stage and want to run next stage steps even your previous stage get fails.
+
+You can do it by using "if" filed.
+
+"if" field -- can be use in Jobs and Steps
+
+To Ignore get error/stage fails, use
+"continue-on-error" filed on that steps.
