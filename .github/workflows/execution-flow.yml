@@ -1,4 +1,4 @@
-name: Control over Jobs Steps Functions.
+name: Control over Jobs Steps.
 on:
   push:
     branches:
@@ -44,7 +44,7 @@ jobs:
         # If Test Code steps get fails then this upload test report will be executed.
 
         # If your this step still skip even previous steps fails.
-        # Go To: https://github.com/GitEic-Bhavin/gh-action-P2_repo/blob/master/.github/workflows/execution-flow-functions.yml
+        # Go To: 
         uses: actions/upload-artifact@v3
         with:
           name: test-report

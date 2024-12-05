@@ -1,4 +1,4 @@
-name: Control over Jobs Steps.
+name: Control over Jobs Steps Functions.
 on:
   push:
     branches:
