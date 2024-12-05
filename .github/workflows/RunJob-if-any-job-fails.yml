@@ -105,4 +105,4 @@ jobs:
       - name: "Report job fails"
         run: |
           echo "Something went wrong"
-          echo "${{ github }}"
+          echo "${{ toJSON(github) }}"
