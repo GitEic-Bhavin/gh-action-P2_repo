@@ -27,7 +27,7 @@ jobs:
         working-directory: EnvVarsDBSecrets
 
       - name: Run Server
-        run: npm start & npx wait-on http://127.0.0.1:$PORT
+        run: npm start & npx wait-on http://127.0.0.1:${{ env.PORT }}
         working-directory: EnvVarsDBSecrets
 
 
