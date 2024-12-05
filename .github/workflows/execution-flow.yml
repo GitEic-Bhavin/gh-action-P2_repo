@@ -45,7 +45,7 @@ jobs:
         # working-directory: Run-Job-step-Conditioanlly
         with:
           name: test-report
-          path: test.json
+          path: Run-Job-step-Conditioanlly/test.json
   build:
     needs: test
     runs-on: ubuntu-latest
