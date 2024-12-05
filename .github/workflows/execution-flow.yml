@@ -12,7 +12,6 @@ jobs:
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
-        # working-directory: Run-Job-step-Conditioanlly
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
@@ -30,7 +29,6 @@ jobs:
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
-        # working-directory: Run-Job-step-Conditioanlly
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
@@ -39,10 +37,11 @@ jobs:
         working-directory: Run-Job-step-Conditioanlly
       - name: Test code
         run: npm run test
+        id: run-tests
         working-directory: Run-Job-step-Conditioanlly
       - name: Upload test report
+        if: steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v3
-        # working-directory: Run-Job-step-Conditioanlly
         with:
           name: test-report
           path: Run-Job-step-Conditioanlly/test.json
