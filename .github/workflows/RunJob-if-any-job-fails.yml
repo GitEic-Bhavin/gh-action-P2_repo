@@ -1,0 +1,106 @@
+name: Run Report job while any of jobs fails.
+on:
+  push:
+    branches:
+      - master
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+        working-directory: Run-Job-step-Conditioanlly
+      - name: Lint code
+        run: npm run lint
+        working-directory: Run-Job-step-Conditioanlly
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+        working-directory: Run-Job-step-Conditioanlly
+      - name: Test code
+        run: npm run test
+        id: run-tests
+        working-directory: Run-Job-step-Conditioanlly
+      - name: Upload test report
+        if: failure() && steps.run-tests.outcome == 'failure'  # If Test Code steps runs successfully then this upload test report steps will not be runs and skips.
+        # If Test Code steps get fails then this upload test report will be executed.
+
+        # If your this step still skip even previous steps fails.
+        # That mean, still github are in default behaviour.
+        # Why default behaviour did not changed ? bcz, previous steps -- failes -- yes.
+        # if condition meets ? YES.
+        # But, Github didnot check is previous steps is really fails ? NO.
+        # That for you have to use functions().
+
+# failure() -- always check for previous steps fails or not
+# always() -- Always executes step and never check for previous steps fails.
+# success() -- return TRUE when none of the previous steps are fails.
+# cancelled() -- return TRUE when workflows get cancelled.
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: Run-Job-step-Conditioanlly/test.json
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache
+        # working-directory: Run-Job-step-Conditioanlly
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+        working-directory: Run-Job-step-Conditioanlly
+      - name: Build website
+        id: build-website
+        run: npm run build
+        working-directory: Run-Job-step-Conditioanlly
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: Run-Job-step-Conditioanlly/dist
+        # working-directory: Run-Job-step-Conditioanlly
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+      - name: Output contents
+        run: ls
+      - name: Deploy
+        run: echo "Deploying..."
+  report:
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Report job fails"
+        run: |
+          echo "Something went wrong"
+          echo "${{ github }}"
