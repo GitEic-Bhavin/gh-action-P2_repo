@@ -39,6 +39,7 @@ jobs:
         run: npm run test
         id: run-tests
         working-directory: Run-Job-step-Conditioanlly
+
       - name: Upload test report
         if: failure() && steps.run-tests.outcome == 'failure'  # If Test Code steps runs successfully then this upload test report steps will not be runs and skips.
         # If Test Code steps get fails then this upload test report will be executed.
