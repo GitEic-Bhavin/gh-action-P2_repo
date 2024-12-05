@@ -96,8 +96,8 @@ jobs:
         run: ls
       - name: Deploy
         run: echo "Deploying..."
-  report:
-    if: failure()
+  report: # Job Name
+    if: failure() # Look for if any one of jobs fails ? if yes, then run this jobs.
     runs-on: ubuntu-latest
     steps:
       - name: "Report job fails"
