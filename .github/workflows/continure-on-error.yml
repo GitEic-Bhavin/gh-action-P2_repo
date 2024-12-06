@@ -1,3 +1,17 @@
+# continue-on-error: true
+# If steps fails/get error, It will be ignore that error and make successfuly run that steps.
+# so, All Jobs will be run after this jobs.
+
+# if: failure() conditions
+# If previous steps fails, it will ensure that really it was fails ? if yes, then it will execute this steps.
+# But, in this Job where you define if: failure() conditions.
+# if any of steps fails, so default behaviour -- will not be changed.
+# It just varify previous steps fails and execute next. but, next JOB WILL NOT BE RUN.
+# Bcz, This is Default Behaviour.
+
+# This both ex are of STEP LEVEL.
+# We can configure at JOB LEVLE.
+
 name: Continue-On-Error
 on:
   push:
