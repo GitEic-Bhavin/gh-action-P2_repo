@@ -1,0 +1,39 @@
+# Matrix -- means, Run Workflow / Jobs on multiple machines,
+# Run with multiple and diff NPM Node Version.
+# Run with Multiple and diff OS machins.
+# Many More matrix.
+
+# To define merix,
+# 1. Use strategy 
+# 2. Use matrix under the strategy.
+# 3. define your matrix like os, node versions etc.
+
+# To refer your matrix from strategy, use
+# $ {{ matrix.operating-system }}
+# $ {{ matrix.node-version }}
+
+name: Matrix demo
+on: push
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version: [12, 14, 16]
+        operating-system: [ubuntu-latest, windows,latest]
+
+    runs-on: ${{ matrix.operating-system }}
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Install NPM dependencies
+        run: npm ci
+        working-directory: Run-Job-step-Conditioanlly
+
+      - name: Build Project
+        run: npm run build
+        working-directory: Run-Job-step-Conditioanlly
