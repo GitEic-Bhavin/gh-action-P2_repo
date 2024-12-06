@@ -34,6 +34,6 @@ jobs:
         run: npm ci
         working-directory: Run-Job-step-Conditioanlly
 
-      - name: Build Project
-        run: npm run build
-        working-directory: Run-Job-step-Conditioanlly
+      # - name: Build Project
+      #   run: npm run build
+      #   working-directory: Run-Job-step-Conditioanlly
