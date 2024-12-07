@@ -1,0 +1,13 @@
+# To call workflow into another workflow use EVENT TYPE on: workflow_call.
+# To which workflow you want to call in that workflow you have to mentioned Event Type on: workflow_call.
+# Use that workflow filename into another workflows where 1st workflow will be reuse / call by uses: .github/workflows/file_name.
+# Go to ReUsable-WorkFlow-2.yml
+
+name: Resuable Deployment workflow 1
+on: workflow_call
+jobs:
+  reusalbe-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Info.
+        run: echo "Deploying & Uploading"

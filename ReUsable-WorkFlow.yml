@@ -1,0 +1,9 @@
+# To call workflow into another workflow use EVENT TYPE on: workflow_call.
+
+name: Resuable Deployment
+on:
+jobs:
+  reusalbe-workflow:
+  steps:
+    - name: Output Info.
+      run: echo "Deploying & Uploading"

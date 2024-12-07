@@ -1,0 +1,11 @@
+Workflows 1 has Job1 and multipel steps.
+
+Workflows 2 has Job 1 and Job 2 and multiple steps.
+
+You want to use workflow 1 into Workflow 2's Job 2.
+
+Its called ReUsable WorkFlows.
+
+You can use one workflows into another workflows.
+
+To Call workflow into another workflow use EVENT TYPE on: workflow_call.
