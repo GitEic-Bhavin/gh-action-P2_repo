@@ -29,7 +29,7 @@ on:
     inputs:
       name:
         description: The name of the artifacts failes
-        default: Run-Job-step-Conditioanlly/dist
+        default: dist
         required: false
         type: string
 
