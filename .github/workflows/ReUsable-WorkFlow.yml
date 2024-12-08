@@ -41,7 +41,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           # name: dist-files  # Artifacts name/key.
-          name: $ {{ inputs.artifacts-name }}
+          name: ${{ inputs.artifacts-name }}
       - name: Output contents
         run: ls               # Ensure Artifacts Downloaded.
       - name: Output Info.
