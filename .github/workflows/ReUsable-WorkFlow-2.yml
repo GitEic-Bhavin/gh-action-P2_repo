@@ -88,6 +88,8 @@ jobs:
     needs: build
     # runs-on: ubuntu-latest 
     # To call workflow 1 of reusable-wokflow.yml use , uses: .github/workflow/file_name.
+    # so, all jobs and steps will be performed of workflow 1 in this workflow 2.
+    # You doesn't need to write steps: in this workflow after define full path of workflow 1 as uses:.
     uses: ./.github/workflows/ReUsable-WorkFlow.yml
     # steps:
     #   - name: Get build artifacts
