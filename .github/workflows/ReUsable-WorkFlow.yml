@@ -29,7 +29,7 @@ on:
     inputs:
       name:
         description: The name of the artifacts failes
-        default: dist
+        default: dist-files
         required: false
         type: string
 
