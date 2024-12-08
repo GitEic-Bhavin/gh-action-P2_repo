@@ -27,7 +27,7 @@ on:
 # Define Input Dynamically for download artifacts
 # use inputs:
     inputs:
-      name:
+      name: # Whatever you given name of arifact key that use here.
         description: The name of the artifacts failes
         default: dist-files
         required: false
