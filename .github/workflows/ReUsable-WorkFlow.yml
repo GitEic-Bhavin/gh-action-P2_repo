@@ -3,17 +3,46 @@
 # Use that workflow filename into another workflows where 1st workflow will be reuse / call by uses: .github/workflows/file_name.
 # Go to ReUsable-WorkFlow-2.yml
 
+# name: Resuable Deployment workflow 1
+# on: workflow_call # Call this workflows into another workflows.
+# jobs:
+#   reusalbe-workflow:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Get build artifacts # Download artifacts from wokrflow 2 where this artifacts was uploaded.
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: dist-files  # Artifacts name/key.
+#       - name: Output contents
+#         run: ls               # Ensure Artifacts Downloaded.
+#       - name: Output Info.
+#         run: echo "Deploying & Uploading"
+
+# Define Input Dynamically for download artifacts
+# use inputs:
+
 name: Resuable Deployment workflow 1
-on: workflow_call
+on: 
+  workflow_call: # Call this workflows into another workflows.
+# Define Input Dynamically for download artifacts
+# use inputs:
+    inputs:
+      artifacts-name:
+        description: The name of the artifacts failes
+        default: dist
+        required: false
+        type: string
+
 jobs:
   reusalbe-workflow:
     runs-on: ubuntu-latest
     steps:
-      - name: Get build artifacts
+      - name: Get build artifacts # Download artifacts from wokrflow 2 where this artifacts was uploaded.
         uses: actions/download-artifact@v3
         with:
-          name: dist-files
+          # name: dist-files  # Artifacts name/key.
+          name: $ {{ inputs.artifacts-name }}
       - name: Output contents
-        run: ls
+        run: ls               # Ensure Artifacts Downloaded.
       - name: Output Info.
         run: echo "Deploying & Uploading"
