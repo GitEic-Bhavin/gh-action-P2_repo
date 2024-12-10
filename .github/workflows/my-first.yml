@@ -50,6 +50,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: my-first-artifacts
+        id: upload
 
       - name: show downloaded artifacts
+        if: steps.upload.outcome == 'success'
         run: ls -ltr 01StartingProject/dist
