@@ -23,3 +23,24 @@ jobs:
       - name: npm ci
         run: npm ci
         working-directory: 01StartingProject
+      
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: npm ci
+        run: npm ci
+        working-directory: 01StartingProject
+      - name: Build Artifacts
+        run: npm run build
+        working-directory: 01StartingProject
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-first-artifacts
+          path: |
+            01StartingProject
+            dist
