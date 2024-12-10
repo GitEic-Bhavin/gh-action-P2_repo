@@ -45,3 +45,8 @@ jobs:
           path: |
             01StartingProject
             dist
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: my-first-artifacts
