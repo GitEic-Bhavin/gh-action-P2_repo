@@ -8,7 +8,7 @@ on:
     branches: 
       - master  
     paths-ignore: 
-      - .github/workflows/my-first.yml
+      - .github/workflows/my-first.yml 
 
 jobs:
   demo-job:
