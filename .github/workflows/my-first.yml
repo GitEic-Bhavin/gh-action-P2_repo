@@ -52,4 +52,4 @@ jobs:
           name: my-first-artifacts
 
       - name: show downloaded artifacts
-        run: ls -ltr | grep -i dist/my-first-artifacts
+        run: ls -ltr dist
