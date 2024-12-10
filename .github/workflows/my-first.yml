@@ -12,10 +12,14 @@ jobs:
   demo-job:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
       - name: install npm v 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
       - name: npm ci
         run: npm ci
         working-directory: 01StartigProject
+
+        
