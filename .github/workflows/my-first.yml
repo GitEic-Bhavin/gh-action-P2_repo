@@ -7,6 +7,8 @@ on:
   push:
     branches: 
       - master  
+    paths-ignore: 
+      - 01StartingProject
 
 jobs:
   demo-job:
