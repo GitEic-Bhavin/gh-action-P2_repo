@@ -50,3 +50,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: my-first-artifacts
+
+      - name: show downloaded artifacts
+        run: ls -ltr | grep -i my-first-artifacts
