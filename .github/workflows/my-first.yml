@@ -5,8 +5,8 @@ on:
     types: 
       - opened
   push:
-    # branches: 
-    #   - master  
+    branches: 
+      - master  
     # paths-ignore: 
     #   - .github/workflows/my-first.yml 
 
