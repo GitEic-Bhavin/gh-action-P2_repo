@@ -53,5 +53,5 @@ jobs:
         id: upload
 
       - name: show downloaded artifacts
-        if: steps.upload.outcome == 'success'
+        if: steps.upload.outcome == 'failure'
         run: ls -ltr 01StartingProject/dist
