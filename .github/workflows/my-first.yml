@@ -7,8 +7,7 @@ on:
   push:
     branches: 
       - master  
-    # paths-ignore: 
-    #   - .github/workflows/my-first.yml 
+
 
 jobs:
   demo-job:
