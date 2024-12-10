@@ -7,7 +7,8 @@ on:
   push:
     branches: 
       - master  
-
+    # paths-ignore: 
+    #   - .github/workflows/my-first.yml 
 
 jobs:
   demo-job:
@@ -24,6 +25,7 @@ jobs:
         working-directory: 01StartingProject
       
   build:
+    needs: demo-job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
